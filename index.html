@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        div#root {
+            min-height: 100vh;
+        }
+
+        div#images {
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        div#images > div > img {
+            width: 100%;
+        }
+
+    </style>
+    <title>sophistry</title>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+    import images from './images.js'
+
+    const imageList = images.trim().split('\n')
+    const isLocalhost = location.host.includes('localhost')
+
+    const getUrl = (name) => new URL(isLocalhost ? '/images/' + name : '/sophistry/images/' + name, import.meta.url)
+    const getFilename = (fullFilename) => fullFilename.replace(/\.[A-Za-z0-9]+$/, '')
+
+    document.querySelector('#root').innerHTML = `
+        <div id="images">
+            ${imageList.map((it) => `<div id="${getFilename(it)}"><img src="${getUrl(it)}" alt="${getFilename(it)}"></div>`).join('')}
+        </div>
+    `
+</script>
+</body>
+</html>
